@@ -9,15 +9,36 @@
   </head>
 
   <body>
-    <h1>Треки</h1>
-
-    <button id="add-btn">Добавить трек</button>
-    <ul id="dynamic-list">
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-music"></i> RUST FM</h1>
+        <button id="add-btn">
+          <i class="fas fa-plus"></i> Добавить трек
+        </button>
+      </header>
+      
+      <ul class="M_list" id="dynamic-list">
      
-    </ul>
-
-  <div>
-
-  </div>
+      </ul>
+    </div>
+    
+    <div class="now-playing">
+      <div class="current-track">Выберите трек для воспроизведения</div>
+      <div class="player-controls">
+        <button class="control-btn"><i class="fas fa-step-backward"></i></button>
+        <button class="control-btn play-btn"><i class="fas fa-play"></i></button>
+        <button class="control-btn"><i class="fas fa-step-forward"></i></button>
+      </div>
+      <div class="progress-container">
+        <div class="progress"></div>
+      </div>
+      <div class="volume-control">
+        <i class="fas fa-volume-up"></i>
+        <input type="range" min="0" max="100" value="80" class="volume-slider">
+        <button id="Stop-track" class="play-btn">Стоп</button>
+      </div>
+    </div>
+  
+    <script type="module" src="/main.js" defer></script>
   </body>
 </html>
