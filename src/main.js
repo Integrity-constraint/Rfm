@@ -18,7 +18,7 @@ document.getElementById('add-btn').addEventListener('click', async () => {
         <span class="track-title">${songName}</span>
       </div>
       <button class="play-btn">
-        <i class="fas fa-play"></i>
+        <i class="fas fa-play"><span>&#10148;</span></i>
       </button>
     `;
     
@@ -71,4 +71,16 @@ document.getElementById('Stop-track').addEventListener('click', async () => {
 catch(err){
     console.error("Ошибка", err);
 }
+});
+
+document.getElementById('Volume-input').addEventListener('input', async (e) => {
+  try {
+    const volumePercent = parseInt(e.target.value);
+    const volumeNormalized = volumePercent / 100; 
+    
+    await invoke('ChangeVolume', { volume: volumeNormalized });
+  
+  } catch(err) {
+    console.error("Ошибка изменения громкости:", err);
+  }
 });

@@ -1,5 +1,6 @@
 // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
 
+use std::i32;
 use std::{fs::File, path::Path,io::BufReader, sync::Arc, sync::Mutex};
 use std::time::Duration;
 use rodio::{Decoder, OutputStream, Sink};
@@ -15,7 +16,7 @@ lazy_static::lazy_static! {
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .invoke_handler(tauri::generate_handler![open_file_dialog,Play_selected_file, StopTrack])
+        .invoke_handler(tauri::generate_handler![open_file_dialog,Play_selected_file, StopTrack, ChangeVolume])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -43,8 +44,15 @@ async fn Play_selected_file(filepath: String) {
 
 #[tauri::command]
 async fn StopTrack() {
-    if let Some(sink) = GLOBAL_SINK.lock().unwrap().take() {
+    if let Some(sink) = &*GLOBAL_SINK.lock().unwrap() {
         sink.stop();
+    }
+}
+
+#[tauri::command]
+async fn ChangeVolume(volume: f32) {
+    if let Some(sink) = &*GLOBAL_SINK.lock().unwrap() {
+        sink.set_volume(volume.clamp(0.0, 1.0)); 
     }
 }
 #[tauri::command]
